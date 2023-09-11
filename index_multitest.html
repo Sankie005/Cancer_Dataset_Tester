@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Tester</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>Cancer Dataset Tester</h1>
+    <div id="display" class="center">
+        <py-terminal>
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+        <py-config> 
+            packages=["scikit-learn"]
+        </py-config>
+        <py-script>
+            highest_accuracy=[0,0]
+            for i in range(0,3):
+                from sklearn import datasets 
+                from sklearn.model_selection import train_test_split
+                cancer=datasets.load_breast_cancer()
+                print("Labels:", cancer.target_names)
+                import random 
+                randomness=random.randrange(0,120)
+                print(f"Random state: {randomness}")
+                X_train, X_test, y_train, true_test = train_test_split(cancer.data, cancer.target,test_size=0.3,random_state=randomness)
+                from sklearn import svm 
+                classifier= svm.SVC(kernel='linear')
+                classifier.fit(X_train,y_train)
+                predictor=classifier.predict(X_test)
+                print(predictor)
+                from sklearn import metrics
+                accuracy=metrics.accuracy_score(true_test, predictor)
+                rounded_accuracy=round(accuracy,2)
+                print(f"Accuracy:{rounded_accuracy}%")
+                if accuracy>highest_accuracy[0]:
+                    highest_accuracy=[accuracy,randomness]
+            print(f"The Highest accuracy achieved was {round(highest_accuracy[0],2)}% using random state={highest_accuracy[1]}")
+            
+                
+            
+
+        </py-script>
+     </div>
+
+    
+</body>
+</html>
