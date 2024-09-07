@@ -33,7 +33,7 @@
                 print(predictor)
                 from sklearn import metrics
                 accuracy=metrics.accuracy_score(true_test, predictor)
-                rounded_accuracy=round(accuracy,2)
+                rounded_accuracy=round(accuracy,2)*100
                 print(f"Accuracy:{rounded_accuracy}%")
                 if accuracy>highest_accuracy[0]:
                     highest_accuracy=[accuracy,randomness]
